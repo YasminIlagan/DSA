@@ -11,13 +11,11 @@ struct Deduction {
     Deduction* next;
 };
 
-// Function to add a deduction to the linked list
 void addDeduction(Deduction*& head, const string& name, double amount) {
     Deduction* newDeduction = new Deduction{name, amount, head};
     head = newDeduction;
 }
 
-// Function to print the deductions
 void printDeductions(Deduction* head) {
     Deduction* current = head;
     while (current != nullptr) {
@@ -26,7 +24,6 @@ void printDeductions(Deduction* head) {
     }
 }
 
-// Function to calculate total deductions
 double calculateTotalDeductions(Deduction* head) {
     double total = 0;
     Deduction* current = head;
@@ -37,7 +34,6 @@ double calculateTotalDeductions(Deduction* head) {
     return total;
 }
 
-// Function to calculate SSS, GSIS, PhilHealth, and Savings deductions
 void calculateDeductions(double gross_salary, double& sss, double& gsis, double& philhealth, double& savings) {
     sss = min(800.0, gross_salary * 0.0363);
     gsis = min(600.0, gross_salary * 0.09);
@@ -45,12 +41,10 @@ void calculateDeductions(double gross_salary, double& sss, double& gsis, double&
     savings = gross_salary * 0.1; // Assuming savings is 10% of gross salary
 }
 
-// Function to generate payslip
 void generatePayslip(const string& name, double gross_salary) {
     double sss, gsis, philhealth, savings;
     calculateDeductions(gross_salary, sss, gsis, philhealth, savings);
 
-    // Create the linked list of deductions
     Deduction* head = nullptr;
     const string deductionNames[] = {"SSS Deduction", "GSIS Deduction", "PhilHealth Deduction", "Savings"};
     const double deductionAmounts[] = {sss, gsis, philhealth, savings};
@@ -59,11 +53,9 @@ void generatePayslip(const string& name, double gross_salary) {
         addDeduction(head, deductionNames[i], deductionAmounts[i]);
     }
 
-    // Calculate total deductions and net salary
     double total_deductions = calculateTotalDeductions(head);
     double net_salary = gross_salary - total_deductions;
 
-    // Display the payslip
     cout << fixed << setprecision(2);
     cout << "============================" << endl;
     cout << "       PAYSLIP              " << endl;
@@ -71,7 +63,6 @@ void generatePayslip(const string& name, double gross_salary) {
     cout << "Name: " << name << endl;
     cout << "Gross Salary: " << gross_salary << endl;
 
-    // Print the deductions
     printDeductions(head);
 
     cout << "----------------------------" << endl;
@@ -79,7 +70,6 @@ void generatePayslip(const string& name, double gross_salary) {
     cout << "Net Salary: " << net_salary << endl;
     cout << "============================" << endl;
 
-    // Cleanup linked list
     Deduction* current = head;
     while (current != nullptr) {
         Deduction* temp = current;
